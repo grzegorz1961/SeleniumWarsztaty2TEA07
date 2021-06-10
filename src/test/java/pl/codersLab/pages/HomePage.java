@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.concurrent.TimeUnit;
 
 public class HomePage {
     private static WebDriver driver;
@@ -16,13 +15,18 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"wrapper\"]/div/nav/ol/li[1]/a/span")
     private WebElement home;
 
-    @FindBy(xpath = "//*[@id=\"content\"]/section/div/article[2]/div/a/img")
+    @FindBy(xpath = "//*[@id=\"search_widget\"]/form/input[2]")
+    private WebElement search;
+
+
+    private String nameProduct = "Hummingbird Printed T-Shirt";
+
+    @FindBy(xpath = "//*[@id=\"search_widget\"]/form/button/i")
+    private WebElement searchButton;
+
+    @FindBy(xpath = "//*[@id=\"js-product-list\"]/div[1]/article[1]/div/a/img")
     private WebElement productButton;
     private String product = "//*[@id=\"content\"]/section/div/article[2]/div/a/img";
-
-//    @FindBy(xpath = "//*[@id=\"content\"]/section/div/article[1]/div/a/img")
-//    private WebElement productButton;
-//    private String product = "//*[@id=\"content\"]/section/div/article[1]/div/a/img";
 
     @FindBy(id = "group_1") //oki
     private WebElement sizeSelect;
@@ -79,6 +83,12 @@ public class HomePage {
         // public void homeAs(String size) {
 
         home.click();
+
+        search.click();
+        search.clear();
+        search.sendKeys(nameProduct);
+
+        searchButton.click();
 
         productButton.click();
 

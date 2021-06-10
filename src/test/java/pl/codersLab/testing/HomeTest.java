@@ -9,6 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pl.codersLab.function.LoginSetUp;
 import pl.codersLab.pages.AddressPage;
 import pl.codersLab.pages.HomePage;
 import pl.codersLab.pages.LoginPage;
@@ -16,6 +17,9 @@ import pl.codersLab.pages.LoginPage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,42 +28,34 @@ public class HomeTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        this.driver = LoginSetUp.setUp();
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication&back=my-account");
-    }
+
+   }
 
     @Test
     public void LoginTest() throws IOException {
         LoginPage loginPage = new LoginPage(driver);
-        //loginPage.loginAs("nkssnglcxxajzysope@twzhhq.com", "Kasia2021!");
         loginPage.loginAs("krwrseepkmzaomxhbv@twzhhq.online", "Pass123");
 
         HomePage homePage = new HomePage(driver);
-        homePage.homeAs("XL", 2);
+        homePage.homeAs("M", 5);
     }
 
     @After
-    public void takeScreenshot() {
-// Setting your Chrome options (Desired capabilities)
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments(
-//                "--start-maximized",
-//                "--start-fullscreen"
-//        );
-        //take screenshot of the page
-        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        // Setting your Chrome options (Desired capabilities)
+    public void getScreenShot() throws IOException {
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy h-m-s");
+        Date date = new Date();
+
+        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(src, new File("C:\\testPhoto\\screen.png"));
+            String fileName = "ScreenProduct";
+            FileUtils.copyFile(scrFile, new File("src/main/resources/screenshot/" + fileName + "-" + dateFormat.format(date) + ".png"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
         }
     }
-
     public void tearDown() {
         //  driver.quit();
     }
