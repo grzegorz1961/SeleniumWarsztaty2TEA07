@@ -30,7 +30,6 @@ public class HomeTest {
     public void setUp() {
         this.driver = LoginSetUp.setUp();
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication&back=my-account");
-
    }
 
     @Test

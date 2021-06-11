@@ -9,15 +9,6 @@ import org.openqa.selenium.support.ui.Select;
 public class AddressPage {
     private static WebDriver driver;
 
-//    @FindBy( xpath= "//*[@id=\"_desktop_user_info\"]/div/a[1]")
-//    private WebElement  singOut;
-
-//    @FindBy( css= "#addresses-link > span")
-//    @FindBy( xpath= "//*[@id=\"address-link\"]/span")
-//    private WebElement   adfFirstAddress;
-
-//    @FindBy(xpath="//*[@id=\"content\"]/div[3]/a/span")
-//    private WebElement createNewAddress;
 
     @FindBy(xpath = "//*[@id=\"content\"]/div/div/form/section/div[1]/div[1]/input")
     private WebElement aliasInput;
@@ -63,36 +54,19 @@ public class AddressPage {
 
     public void addressAs(String alias, String company, String vat_number,
                           String address1, String address2, String city,String postcode, String phone ) {
-//        adfFirstAddress.click();
 
-//        createNewAddress.click();
-
-        aliasInput.click();
-        aliasInput.clear();
         aliasInput.sendKeys(alias);
 
-        companyInput.click();
-        companyInput.clear();
         companyInput.sendKeys(company);
 
-        vat_numberInput.click();
-        vat_numberInput.clear();
         vat_numberInput.sendKeys(vat_number);
 
-        address1Input.click();
-        address1Input.clear();
         address1Input.sendKeys(address1);
 
-        address2Input.click();
-        address2Input.clear();
         address2Input.sendKeys(address2);
 
-        cityInput.click();
-        cityInput.clear();
         cityInput.sendKeys(city);
 
-//        postcodeInput.click();
-        postcodeInput.clear();
         postcodeInput.sendKeys(postcode);
 
         Select id_country = new Select(countryInput);

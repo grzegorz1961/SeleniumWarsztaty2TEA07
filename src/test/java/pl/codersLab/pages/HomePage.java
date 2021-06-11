@@ -1,5 +1,6 @@
 package pl.codersLab.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,8 +19,7 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"search_widget\"]/form/input[2]")
     private WebElement search;
 
-
-    private String nameProduct = "Hummingbird Printed T-Shirt";
+    private String nameProduct = "Hummingbird Printed Sweater";
 
     @FindBy(xpath = "//*[@id=\"search_widget\"]/form/button/i")
     private WebElement searchButton;
@@ -28,7 +28,7 @@ public class HomePage {
     private WebElement productButton;
     private String product = "//*[@id=\"content\"]/section/div/article[2]/div/a/img";
 
-    @FindBy(id = "group_1") //oki
+    @FindBy(id = "group_1")
     private WebElement sizeSelect;
     private String size = "group_1";
 
@@ -36,12 +36,11 @@ public class HomePage {
     private WebElement quantityInput;
     private String quantity = "//*[@id=\"quantity_wanted\"]";
 
-    //*[@id="add-to-cart-or-refresh"]/div[2]/div/div[1]/div/span[3]/button[1]/i
     @FindBy(xpath = "//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[1]/div/span[3]/button[1]/i")
     private WebElement quantityCounter;
     private String counter = "//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[1]/div/span[3]/button[1]/i";
 
-    @FindBy(xpath = "//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button") //oki
+    @FindBy(xpath = "//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[2]/button")
     private WebElement addProductButton;
 
     @FindBy(xpath = "//*[@id=\"blockcart-modal\"]/div/div/div[2]/div/div[2]/div/div/a")
@@ -80,25 +79,32 @@ public class HomePage {
     }
 
     public void homeAs(String size, int qty) {
-        // public void homeAs(String size) {
 
         home.click();
 
-        search.click();
-        search.clear();
-        search.sendKeys(nameProduct);
+        if (nameProduct == "Hummingbird Printed Sweater") {
+            search.click();
+            search.clear();
+            search.sendKeys(nameProduct);
+        } else {
+            Assert.fail();
+        }
 
         searchButton.click();
 
         productButton.click();
 
-        Select group_1 = new Select(sizeSelect);
-        group_1.selectByVisibleText(size);
+        if (size == "M") {
+            Select group_1 = new Select(sizeSelect);
+            group_1.selectByVisibleText(size);
+        } else {
+            Assert.fail();
+        }
 
         for (int i = 1; i <= qty; i++) {
             driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[1]/div/span[3]/button[1]/i")).click();
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.getMessage();
                 System.out.println("There are not enough products in stock");
