@@ -2,9 +2,9 @@ package pl.codersLab.pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -19,18 +19,24 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"search_widget\"]/form/input[2]")
     private WebElement search;
 
-    private String nameProduct = "Hummingbird Printed Sweater";
+    @FindBy(xpath = "//div[@class='products row']/article//a")
+    private WebElement product;
 
     @FindBy(xpath = "//*[@id=\"search_widget\"]/form/button/i")
     private WebElement searchButton;
 
     @FindBy(xpath = "//*[@id=\"js-product-list\"]/div[1]/article[1]/div/a/img")
     private WebElement productButton;
-    private String product = "//*[@id=\"content\"]/section/div/article[2]/div/a/img";
 
     @FindBy(id = "group_1")
     private WebElement sizeSelect;
     private String size = "group_1";
+
+    @FindBy(className = "regular-price")
+    private WebElement regularPriceProduct;
+
+    @FindBy(xpath = "//*[@class='current-price']/*[@itemprop='price']")
+    private WebElement currentPriceProduct;
 
     @FindBy(xpath = "//*[@id=\"quantity_wanted\"")
     private WebElement quantityInput;
@@ -72,34 +78,26 @@ public class HomePage {
     private WebElement obligationToPayButton;
     private String obligation = "//*[@id=\"payment-confirmation\"]/div[1]/button";
 
-    //@FindBy(xpath = "//*[@class='price']/strong")
-    @FindBy(xpath ="//*[@id=\"order-items\"]/div/table/tbody/tr[3]/td[2]")
-    private WebElement pricePaymentAmount;
-
-    @FindBy(xpath = "//div[@id='order-details']//li[1]")
-    //div[@id='order-details']//li[1]
-    private WebElement orderReferenceProduct;
-
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
-    public void homeAs(String size, int qty) {
-
+    public void setSearch(String searchItem){
         home.click();
 
-        if (nameProduct == "Hummingbird Printed Sweater") {
-            search.click();
-            search.clear();
-            search.sendKeys(nameProduct);
-        } else {
-            Assert.fail();
-        }
+        search.sendKeys(searchItem);
+        search.sendKeys(Keys.ENTER);
+    }
+    public void getProduct() {
+        product.click();
+    }
+    public void homeAs(String size, int qty, int discount) {
 
-        searchButton.click();
-
-        productButton.click();
+        double regularPrice = Double.parseDouble(regularPriceProduct.getText().substring(1, 6));
+        double currentPrice = Double.parseDouble(currentPriceProduct.getText().substring(1, 6));
+        int discountProduct = (int) (((regularPrice - currentPrice )/ regularPrice) * 100);
+        Assert.assertEquals(discount, discountProduct);
+        System.out.println("I checked that the discount on the product is: " + discountProduct + "%");
 
         if (size == "M") {
             Select group_1 = new Select(sizeSelect);
@@ -137,14 +135,5 @@ public class HomePage {
         if (!approveTermsAndConditions.isSelected())
             approveTermsAndConditions.click();
         obligationToPayButton.click();
-    }
-    public String getPriceElement() {
-        String priceProduct = pricePaymentAmount.getText();
-        return priceProduct;
-    }
-
-    public String getOrderReferenceElement() {
-        String referenceProduct = orderReferenceProduct.getText().substring(17, 26);
-        return referenceProduct;
     }
 }
