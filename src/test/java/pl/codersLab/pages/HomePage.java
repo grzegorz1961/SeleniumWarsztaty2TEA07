@@ -72,6 +72,13 @@ public class HomePage {
     private WebElement obligationToPayButton;
     private String obligation = "//*[@id=\"payment-confirmation\"]/div[1]/button";
 
+    //@FindBy(xpath = "//*[@class='price']/strong")
+    @FindBy(xpath ="//*[@id=\"order-items\"]/div/table/tbody/tr[3]/td[2]")
+    private WebElement pricePaymentAmount;
+
+    @FindBy(xpath = "//div[@id='order-details']//li[1]")
+    //div[@id='order-details']//li[1]
+    private WebElement orderReferenceProduct;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -104,7 +111,7 @@ public class HomePage {
         for (int i = 1; i <= qty; i++) {
             driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[1]/div/span[3]/button[1]/i")).click();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.getMessage();
                 System.out.println("There are not enough products in stock");
@@ -129,7 +136,15 @@ public class HomePage {
 
         if (!approveTermsAndConditions.isSelected())
             approveTermsAndConditions.click();
-
         obligationToPayButton.click();
+    }
+    public String getPriceElement() {
+        String priceProduct = pricePaymentAmount.getText();
+        return priceProduct;
+    }
+
+    public String getOrderReferenceElement() {
+        String referenceProduct = orderReferenceProduct.getText().substring(17, 26);
+        return referenceProduct;
     }
 }

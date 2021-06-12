@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pl.codersLab.function.LoginSetUp;
 import pl.codersLab.pages.AddressPage;
+import pl.codersLab.pages.ExtraHomePage;
 import pl.codersLab.pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;

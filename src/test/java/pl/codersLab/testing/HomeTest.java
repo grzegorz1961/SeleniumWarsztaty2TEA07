@@ -7,20 +7,16 @@ import org.junit.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pl.codersLab.function.LoginSetUp;
-import pl.codersLab.pages.AddressPage;
+import pl.codersLab.pages.ExtraHomePage;
 import pl.codersLab.pages.HomePage;
 import pl.codersLab.pages.LoginPage;
 
-import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 
 public class HomeTest {
@@ -33,12 +29,18 @@ public class HomeTest {
    }
 
     @Test
-    public void LoginTest() throws IOException {
+    public void LoginTest()  {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAs("krwrseepkmzaomxhbv@twzhhq.online", "Pass123");
 
         HomePage homePage = new HomePage(driver);
         homePage.homeAs("M", 5);
+
+        String priceProduct = homePage.getPriceElement();
+        String referenceProduct = homePage.getOrderReferenceElement();
+
+        ExtraHomePage extraHomePage = new ExtraHomePage(driver);
+        extraHomePage.checkOrderHistory(priceProduct,referenceProduct);
     }
 
     @After
