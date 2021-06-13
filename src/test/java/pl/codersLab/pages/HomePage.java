@@ -8,10 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import pl.codersLab.testing.HomeTest;
 
 
 public class HomePage {
     private static WebDriver driver;
+
+    private enum Size {S, M, L, XL}
+
+    private int qty = 0;
+    private int discountProduct = 0;
 
     @FindBy(xpath = "//*[@id=\"wrapper\"]/div/nav/ol/li[1]/a/span")
     private WebElement home;
@@ -78,33 +84,44 @@ public class HomePage {
     private WebElement obligationToPayButton;
     private String obligation = "//*[@id=\"payment-confirmation\"]/div[1]/button";
 
+    //*[@id="order-details"]/ul/li[1]
+    @FindBy(xpath = "//div[@id='order-details']//li[1]") //oki
+    private WebElement orderReferenceProduct;
+
+    @FindBy(xpath = "//*[@class='price']/strong") //oki
+    private WebElement priceProduct;
+
+    @FindBy(xpath = "//*[@id=\"history-link\"]/span") //oki
+    private WebElement OrderHistoryAndDetails;
+
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-    public void setSearch(String searchItem){
+
+    public void setSearch(String searchItem) {
         home.click();
 
         search.sendKeys(searchItem);
         search.sendKeys(Keys.ENTER);
     }
+
     public void getProduct() {
+
         product.click();
     }
+
     public void homeAs(String size, int qty, int discount) {
 
         double regularPrice = Double.parseDouble(regularPriceProduct.getText().substring(1, 6));
         double currentPrice = Double.parseDouble(currentPriceProduct.getText().substring(1, 6));
-        int discountProduct = (int) (((regularPrice - currentPrice )/ regularPrice) * 100);
+        int discountProduct = (int) (((regularPrice - currentPrice) / regularPrice) * 100);
         Assert.assertEquals(discount, discountProduct);
         System.out.println("I checked that the discount on the product is: " + discountProduct + "%");
 
-        if (size == "M") {
-            Select group_1 = new Select(sizeSelect);
-            group_1.selectByVisibleText(size);
-        } else {
-            Assert.fail();
-        }
+        Select group_1 = new Select(sizeSelect);
+        group_1.selectByVisibleText(size);
 
         for (int i = 1; i <= qty; i++) {
             driver.findElement(By.xpath("//*[@id=\"add-to-cart-or-refresh\"]/div[2]/div/div[1]/div/span[3]/button[1]/i")).click();
@@ -136,4 +153,15 @@ public class HomePage {
             approveTermsAndConditions.click();
         obligationToPayButton.click();
     }
+
+    public String getPriceProduct() {
+        String price = priceProduct.getText();
+        return price;
+    }
+
+    public String getOrderReferenceProduct() {
+        String referenceProduct = orderReferenceProduct.getText().substring(17, 26);
+        return referenceProduct;
+    }
+
 }

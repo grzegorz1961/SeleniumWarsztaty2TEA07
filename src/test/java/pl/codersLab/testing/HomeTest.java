@@ -2,6 +2,7 @@ package pl.codersLab.testing;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.OutputType;
@@ -20,6 +21,10 @@ import java.util.Date;
 public class HomeTest {
     private static WebDriver driver;
     private String product = "Hummingbird Printed Sweater";
+    private String size ="M";
+    private int qty = 0;
+
+    private enum Size {S, M,L,XL}
 
     @Before
     public void setUp() {
@@ -33,13 +38,25 @@ public class HomeTest {
         loginPage.loginAs("krwrseepkmzaomxhbv@twzhhq.online", "Pass123");
 
         HomePage homePage = new HomePage(driver);
+
         homePage.setSearch(product);
+        if(product != "Hummingbird Printed Sweater") {
+            Assert.fail("There are not enough products in stock");
+        }
+
         homePage.getProduct();
+
         homePage.homeAs("M", 5,20);
+        if(!(size.equals(Size.M.toString()))){
+            Assert.fail();
+        }
+        if(!(qty<=5)){
+            Assert.fail();
+        }
     }
 
     @After
-    public void getScreenShot() throws IOException {
+    public void getScreenShot() {
         DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy h-m-s");
         Date date = new Date();
 
