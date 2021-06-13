@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage {
     private static WebDriver driver;
 
-    //Trzymamy nasze wszystkie szukane elementy w klasie a nie metodzie poniżej, nie mogą byc publiczne
     @FindBy(name = "email")
     private WebElement loginInput;
 
@@ -25,7 +24,6 @@ public class LoginPage {
     private WebElement createNewAddress;
 
 
-    //Aby powyższe lokatory działały wywołujemy w konstruktorze: statyczną metodę PageFactory
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

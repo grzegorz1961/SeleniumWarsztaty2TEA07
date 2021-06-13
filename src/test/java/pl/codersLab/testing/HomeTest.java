@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import pl.codersLab.function.LoginSetUp;
 import pl.codersLab.pages.HomePage;
 import pl.codersLab.pages.LoginPage;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -21,10 +22,10 @@ import java.util.Date;
 public class HomeTest {
     private static WebDriver driver;
     private String product = "Hummingbird Printed Sweater";
-    private String size ="M";
+    private String size = "M";
     private int qty = 0;
 
-    private enum Size {S, M,L,XL}
+    private enum Size {S, M, L, XL}
 
     @Before
     public void setUp() {
@@ -40,17 +41,17 @@ public class HomeTest {
         HomePage homePage = new HomePage(driver);
 
         homePage.setSearch(product);
-        if(product != "Hummingbird Printed Sweater") {
+        if (product != "Hummingbird Printed Sweater") {
             Assert.fail("There are not enough products in stock");
         }
 
         homePage.getProduct();
 
-        homePage.homeAs("M", 5,20);
-        if(!(size.equals(Size.M.toString()))){
+        homePage.homeAs("M", 5, 20);
+        if (!(size.equals(Size.M.toString()))) {
             Assert.fail();
         }
-        if(!(qty<=5)){
+        if (!(qty <= 5)) {
             Assert.fail();
         }
     }
@@ -70,6 +71,7 @@ public class HomeTest {
             System.out.println(e.getMessage());
         }
     }
+
     public void tearDown() {
         //  driver.quit();
     }

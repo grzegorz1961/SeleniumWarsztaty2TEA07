@@ -84,17 +84,6 @@ public class HomePage {
     private WebElement obligationToPayButton;
     private String obligation = "//*[@id=\"payment-confirmation\"]/div[1]/button";
 
-    //*[@id="order-details"]/ul/li[1]
-    @FindBy(xpath = "//div[@id='order-details']//li[1]") //oki
-    private WebElement orderReferenceProduct;
-
-    @FindBy(xpath = "//*[@class='price']/strong") //oki
-    private WebElement priceProduct;
-
-    @FindBy(xpath = "//*[@id=\"history-link\"]/span") //oki
-    private WebElement OrderHistoryAndDetails;
-
-
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -153,15 +142,4 @@ public class HomePage {
             approveTermsAndConditions.click();
         obligationToPayButton.click();
     }
-
-    public String getPriceProduct() {
-        String price = priceProduct.getText();
-        return price;
-    }
-
-    public String getOrderReferenceProduct() {
-        String referenceProduct = orderReferenceProduct.getText().substring(17, 26);
-        return referenceProduct;
-    }
-
 }

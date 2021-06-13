@@ -12,7 +12,7 @@ public class AddressPage {
 
     @FindBy(xpath = "//*[@id=\"content\"]/div/div/form/section/div[1]/div[1]/input")
     private WebElement aliasInput;
-    private String alians ="//*[@id=\"content\"]/div/div/form/section/div[1]/div[1]/input";
+    private String alians = "//*[@id=\"content\"]/div/div/form/section/div[1]/div[1]/input";
 
     @FindBy(xpath = "//*[@id=\"content\"]/div/div/form/section/div[4]/div[1]/input")
     private WebElement companyInput;
@@ -41,7 +41,7 @@ public class AddressPage {
     private WebElement phoneInput;
     private String phone = "//*[@id=\"content\"]/div/div/form/section/div[11]/div[1]/input";
 
-    @FindBy(xpath =  " //*[@id=\"content\"]/div/div/form/footer/button")
+    @FindBy(xpath = " //*[@id=\"content\"]/div/div/form/footer/button")
     private WebElement signInButton;
 
     @FindBy(xpath = "//*[@id=\"wrapper\"]/div/nav/ol/li[1]/a/span")
@@ -53,7 +53,7 @@ public class AddressPage {
     }
 
     public void addressAs(String alias, String company, String vat_number,
-                          String address1, String address2, String city,String postcode, String phone ) {
+                          String address1, String address2, String city, String postcode, String phone) {
 
         aliasInput.sendKeys(alias);
 
